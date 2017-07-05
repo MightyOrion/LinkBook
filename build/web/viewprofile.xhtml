@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>View Profile | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+
+        <h:form styleClass="header">
+            <p style="text-align: right; padding-left: 1em; width: 95%"><h:link outcome="profile"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link>
+                <h:selectOneMenu id="searchs" value="#{login.searchCat}" >  
+                    <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                    <f:selectItem id="people" itemValue="People" itemLabel="People" />
+                    <f:selectItem id="companies" itemValue="Companies" itemLabel="Companies" />
+                    <f:selectItem id="universities" itemValue="Universities" itemLabel="Universities" />
+                </h:selectOneMenu>
+                <h:inputText id="searchword" title="Please enter your search keyword" styleClass="searchtextbox" value="#{login.searchWord}"></h:inputText>            
+                <h:commandButton styleClass="menubutton" id="search" value="Search" action="search.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="Name" value="#{login.theProfile.fname} #{login.theProfile.lname}" action="profile.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Connections" value="Connections" action="connections.xhtml" />&nbsp;  
+                <h:commandButton styleClass="menubutton" id="Jobs" value="Jobs" action="jobs.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Notification" value="Notifications" action="notification.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="SignOut" value="Sign Out" action="#{login.theLoginAccount.signOut()}" />&nbsp;&nbsp;                        
+            </p>
+        </h:form>        
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 10em auto 1em" >
+
+            <p style="text-align:center; padding: 2em; background-color: #262d30"><h:graphicImage value="images/avatar.png"/><br></br>
+                <h:commandButton id="sendrequest" value="+ Connect" styleClass="regularbutton" action="#{connection.sendRequest(login.searchid,login.theLoginAccount.id)}" rendered="#{not connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) 
+                                                                                                         and not (connection.thisIDisPendingReceived(login.searchid,login.theLoginAccount.id) or connection.thisIDisPendingSent(login.searchid,login.theLoginAccount.id)) 
+                                                                                                         and not (login.theLoginAccount.id ==  login.searchid)}">                                    
+                </h:commandButton>                
+                <h:commandButton styleClass="regularbutton" style="margin-left: 2em; margin-top: 0.5em" id="ignore" value="Ignore" action="#{connection.ignoreRequest(login.searchid,login.theLoginAccount.id)}" 
+                                 rendered="#{not connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) and connection.thisIDisPendingReceived(login.searchid,login.theLoginAccount.id)}">                                       
+                </h:commandButton><br></br>
+                <h:commandButton styleClass="regularbutton" style="margin-left: 2em; margin-top: 0.5em" id="connect" value="Accept" action="#{connection.acceptRequest(login.searchid,login.theLoginAccount.id)}" 
+                                 rendered="#{not connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) and connection.thisIDisPendingReceived(login.searchid,login.theLoginAccount.id)}">                   
+                </h:commandButton>
+                <p style="text-align: center"><h:outputLabel rendered="#{connection.thisIDisPendingSent(login.searchid,login.theLoginAccount.id)}">Pending connection request</h:outputLabel></p>
+                <p style="text-align: center"><h:outputLabel rendered="#{connection.thisIDisConnected(login.searchid,login.theLoginAccount.id)}">Connected</h:outputLabel></p>
+                <h1 style="text-align: center">#{login.viewprofile.fname} #{login.viewprofile.lname}</h1>
+
+            </p>
+            <p style="text-align:center">              
+                #{login.viewprofile.location}<br></br><br></br></p></h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.2em auto" rendered="#{login.viewprofile.jobtitle != '' or login.viewprofile.company != ''}">
+            <h2 style="padding-left: 1em; padding-top: 1em">Experience</h2>
+            <p style="text-align:left; padding-left: 2em; padding-bottom: 2em">               
+                #{login.viewprofile.jobtitle}<br></br>
+                #{login.viewprofile.company}<br></br></p></h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.2em auto" rendered="#{login.viewprofile.school != '' or login.viewprofile.degree != ''}">
+            <h2 style="padding-left: 1em; padding-top: 1em">Education</h2>
+            <p style="text-align:left; padding-left: 2em; padding-bottom: 2em">                   
+                #{login.viewprofile.school}<br></br>
+                #{login.viewprofile.degree}<br></br></p></h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.2em auto" rendered="#{login.viewprofile.skill1 != '' or login.viewprofile.skill2 != '' or login.viewprofile.skill3 != ''}" >
+            <h2 style="padding-left: 1em; padding-top: 1em">Skills</h2>
+            <h:outputLabel styleClass="dataTableOutputTextSmall"  style="text-align:left; padding-left: 2em" rendered="#{login.viewprofile.skill1 != ''}"> 
+                <h:outputLabel style="background-color:#44ABF4">&nbsp;#{endorsement.countThisSkill(login.searchid, login.viewprofile.skill1)}&nbsp;</h:outputLabel>                
+                #{login.viewprofile.skill1}&nbsp;<h:commandButton id="endorse1" value="+" styleClass="regularbutton" action="#{endorsement.endorse(login.searchid,login.theLoginAccount.id,login.viewprofile.skill1)}" 
+                                       rendered="#{connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) 
+                                                   and not endorsement.thisSkillisEndorsed(login.searchid,login.theLoginAccount.id,login.viewprofile.skill1) 
+                                                   and not (login.theLoginAccount.id ==  login.searchid)}">                                      
+                </h:commandButton><br></br>
+                <p style="font-size: 0.8em;padding-left: 2em">#{endorsement.whoEndorsed(login.searchid,login.viewprofile.skill1)}</p><br></br>
+            </h:outputLabel>
+            <h:outputLabel styleClass="dataTableOutputTextSmall" style="text-align:left; padding-left: 2em" rendered="#{login.viewprofile.skill2 != ''}">  
+                <h:outputLabel style="background-color:#44ABF4">&nbsp;#{endorsement.countThisSkill(login.searchid, login.viewprofile.skill2)}&nbsp;</h:outputLabel>                
+                #{login.viewprofile.skill2}&nbsp;<h:commandButton id="endorse2" value="+" styleClass="regularbutton" action="#{endorsement.endorse(login.searchid,login.theLoginAccount.id,login.viewprofile.skill2)}" 
+                                       rendered="#{connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) 
+                                                   and not endorsement.thisSkillisEndorsed(login.searchid,login.theLoginAccount.id,login.viewprofile.skill2) 
+                                                   and not (login.theLoginAccount.id ==  login.searchid)}">                                        
+                </h:commandButton><br></br>
+                <p style="font-size: 0.8em;padding-left: 2em">#{endorsement.whoEndorsed(login.searchid,login.viewprofile.skill2)}</p><br></br>
+            </h:outputLabel>
+            <h:outputLabel styleClass="dataTableOutputTextSmall" style="text-align:left; padding-left: 2em; padding-bottom: 2em" rendered="#{login.viewprofile.skill3 != ''}"> 
+                <h:outputLabel style="background-color:#44ABF4">&nbsp;#{endorsement.countThisSkill(login.searchid, login.viewprofile.skill3)}&nbsp;</h:outputLabel>                
+                #{login.viewprofile.skill3}&nbsp;<h:commandButton id="endorse3" value="+" styleClass="regularbutton" action="#{endorsement.endorse(login.searchid,login.theLoginAccount.id,login.viewprofile.skill3)}" 
+                                       rendered="#{connection.thisIDisConnected(login.searchid,login.theLoginAccount.id) 
+                                                   and not endorsement.thisSkillisEndorsed(login.searchid,login.theLoginAccount.id,login.viewprofile.skill3) 
+                                                   and not (login.theLoginAccount.id ==  login.searchid)}">                                        
+                </h:commandButton><br></br>
+                <p style="font-size: 0.8em;padding-left: 2em">#{endorsement.whoEndorsed(login.searchid,login.viewprofile.skill3)}</p><br></br>
+            </h:outputLabel><br></br><br></br>    
+        </h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.2em auto" rendered="#{not empty connection.connectedConnections(login.searchid)}">
+            <h2 style="padding-left: 1em; padding-top: 1em">Connections</h2>                
+
+            <h:dataTable id="list" styleClass="dataTable" rows ="#{connection.connectedConnections(login.searchid).size()}" value="#{connection.connectedConnections(login.searchid)}" var="Profile" >  
+                <h:column>
+                    <h:graphicImage style="margin-right: 1.5em" value="images/avatar_small.png"/>
+                </h:column>
+                <h:column>    
+                    <h:outputText styleClass="dataTableOutputText" id="strname" value="#{Profile.fname} #{Profile.lname}"/><br></br>
+                    <h:outputText styleClass="dataTableOutputTextSmall" id="strjobtitle" value="#{Profile.jobtitle}"/><br></br><br></br>
+                </h:column>
+                <h:column>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; alignment-adjust: central" id="viewprofile" value="View profile" action="#{login.viewProfile(Profile.id)}">
+                        <f:setPropertyActionListener target="#{login.searchid}" value="#{Profile.id}" />
+                    </h:commandButton>              
+                </h:column> 
+            </h:dataTable> 
+
+        </h:form>
+    </h:body>
+</html>

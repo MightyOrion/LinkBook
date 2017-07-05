@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Connections | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+
+        <h:form styleClass="header">
+            <p style="text-align: right; padding-left: 1em; width: 95%"><h:link outcome="profile"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link>
+                <h:selectOneMenu id="searchs" value="#{login.searchCat}" >  
+                    <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                    <f:selectItem id="people" itemValue="People" itemLabel="People" />
+                    <f:selectItem id="companies" itemValue="Companies" itemLabel="Companies" />
+                    <f:selectItem id="universities" itemValue="Universities" itemLabel="Universities" />
+                </h:selectOneMenu>
+                <h:inputText id="searchword" title="Please enter your search keyword" styleClass="searchtextbox" value="#{login.searchWord}"></h:inputText>            
+                <h:commandButton styleClass="menubutton" id="search" value="Search" action="search.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="Name" value="#{login.theProfile.fname} #{login.theProfile.lname}" action="profile.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Connections" value="Connections" action="connections.xhtml" />&nbsp;  
+                <h:commandButton styleClass="menubutton" id="Jobs" value="Jobs" action="jobs.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Notification" value="Notifications" action="notification.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="SignOut" value="Sign Out" action="#{login.theLoginAccount.signOut()}" />&nbsp;&nbsp;                        
+            </p>
+        </h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 10em auto 1em" >            
+            <h:outputLabel rendered="#{not empty connection.suggestConnections(login.theLoginAccount.id)}"><h2 style="text-align: left; padding-left: 1.5em; padding-top: 2em" >Connect to other people you may know</h2></h:outputLabel>
+            <h:outputLabel rendered="#{empty connection.suggestConnections(login.theLoginAccount.id)}"><h2 style="text-align: center; padding: 2em" >No connection suggested</h2></h:outputLabel> 
+            <h:dataTable id="list" styleClass="dataTable" rows ="#{connection.suggestConnections(login.theLoginAccount.id).size()}" value="#{connection.suggestConnections(login.theLoginAccount.id)}" var="Profile" rendered="#{not empty connection.suggestConnections(login.theLoginAccount.id)}">  
+                <h:column>
+                    <h:graphicImage style="margin-right: 1.5em" value="images/avatar_small.png"/>
+                </h:column>
+                <h:column>    
+                    <h:outputText styleClass="dataTableOutputText" id="strname" value="#{Profile.fname} #{Profile.lname}"/><br></br>
+                    <h:outputText styleClass="dataTableOutputTextSmall" id="strjobtitle" value="#{Profile.jobtitle}"/><br></br><br></br>
+                </h:column>
+                <h:column>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; alignment-adjust: central" id="viewprofile" value="View profile" action="#{login.viewProfile(Profile.id)}">
+                        <f:setPropertyActionListener target="#{login.searchid}" value="#{Profile.id}" />
+                    </h:commandButton>              
+                </h:column> 
+            </h:dataTable>    
+        </h:form>        
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.2em auto" rendered="#{not empty connection.connectedConnections(login.theLoginAccount.id)}">
+            <h2 style="padding-left: 1em; padding-top: 1em">Connections</h2>
+            <p style="padding-left: 2em">You have #{connection.connectedConnections(login.theLoginAccount.id).size()} connections. Stay up to date and grow your network.</p>
+            <h:dataTable id="list" styleClass="dataTable" rows ="#{connection.connectedConnections(login.theLoginAccount.id).size()}" value="#{connection.connectedConnections(login.theLoginAccount.id)}" var="Profile" >  
+                <h:column>
+                    <h:graphicImage style="margin-right: 1.5em" value="images/avatar_small.png"/>
+                </h:column>
+                <h:column>    
+                    <h:outputText styleClass="dataTableOutputText" id="strname" value="#{Profile.fname} #{Profile.lname}"/><br></br>
+                    <h:outputText styleClass="dataTableOutputTextSmall" id="strjobtitle" value="#{Profile.jobtitle}"/><br></br><br></br>
+                </h:column>
+                <h:column>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; alignment-adjust: central" id="viewprofile" value="View profile" action="#{login.viewProfile(Profile.id)}">
+                        <f:setPropertyActionListener target="#{login.searchid}" value="#{Profile.id}" />
+                    </h:commandButton>              
+                </h:column> 
+            </h:dataTable> 
+        </h:form>        
+    </h:body>
+</html>

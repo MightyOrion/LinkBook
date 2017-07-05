@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Welcome | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+        <h:form styleClass="header">
+            <p style="text-align:left; padding-left: 1em; padding-bottom: 0.5em"><h:link outcome="index"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link></p>
+        </h:form>        
+        <h:form style="width: 500px; background-color: rgb(224,224,224); margin: 10em auto" >
+
+            <p style="text-align:center; padding: 2em">                
+                Let’s start with your profile<br></br>
+                This will help Linkedbook serve your needs better
+            </p>
+
+            <p style="text-align:left; padding: 2em 2em 0em 2em">                
+                Location<br></br>
+                <h:inputText id="location" style="width: 100%" title="Please enter your Location" validatorMessage="The maximum length of your 
+                             Location is 20." value="#{login.theProfile.location}"><f:validateLength maximum="20"/></h:inputText>
+                <h:message styleClass="errormessage" for="location" /><br></br><br></br>
+
+                Gender*<br></br>
+                <h:selectOneMenu id="gender" required="true" requiredMessage="The Gender field cannot be empty" style="width: 50%" value="#{login.theProfile.gender}">  
+                    <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                    <f:selectItem itemValue="Male" itemLabel="Male"  />
+                    <f:selectItem itemValue="Female" itemLabel="Female"  />
+                </h:selectOneMenu><h:message styleClass="errormessage" for="gender" /><br></br><br></br>
+
+                Account Type*<br></br>
+                <h:selectOneMenu id="type" required="true" requiredMessage="The Type field cannot be empty" style="width: 50%" value="#{login.theProfile.type}">  
+                    <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                    <f:selectItem itemValue="Regular" itemLabel="Regular"  />
+                    <f:selectItem itemValue="Recruiter" itemLabel="Recruiter"  />
+                </h:selectOneMenu><h:message styleClass="errormessage" for="type" /><br></br><br></br>
+
+                Current Company<br></br>
+                <h:inputText id="company" style="width: 100%" title="Please enter your Company" validatorMessage="The maximum length of your 
+                             Company is 20." value="#{login.theProfile.company}"><f:validateLength maximum="20" /></h:inputText>
+                <h:message styleClass="errormessage" for="company" /><br></br><br></br>
+
+                Job Title<br></br>
+                <h:inputText id="jobtitle" style="width: 100%" title="Please enter your Job Titile" validatorMessage="The maximum length of your 
+                             Job Title is 20." value="#{login.theProfile.jobtitle}"><f:validateLength maximum="20" /></h:inputText>
+                <h:message styleClass="errormessage" for="jobtitle" /><br></br><br></br>
+
+                School or College/University*<br></br>
+                <h:inputText id="school" style="width: 100%" required ="true" requiredMessage="The School field cannot be empty" title="Please enter your School" validatorMessage="The length of your 
+                             School must be between 1 and 20." value="#{login.theProfile.school}"><f:validateLength maximum="20" minimum="1" /></h:inputText>
+                <h:message styleClass="errormessage" for="school" /><br></br><br></br>
+
+                Degree*<br></br>
+                <h:inputText id="degree" style="width: 100%" required ="true" requiredMessage="The Degree field cannot be empty" title="Please enter your Degree" validatorMessage="The length of your 
+                             Degree must be between 1 and 20." value="#{login.theProfile.degree}"><f:validateLength maximum="20" minimum="1" /></h:inputText>
+                <h:message styleClass="errormessage" for="degree" /><br></br><br></br>
+
+                Skill 1<br></br>
+                <h:inputText id="skill1" style="width: 100%" title="Please enter your Skill" validatorMessage="The maximum length of your 
+                             Skill is 20." value="#{login.theProfile.skill1}"><f:validateLength maximum="20" /></h:inputText>
+                <h:message styleClass="errormessage" for="skill1" /><br></br><br></br>
+                Skill 2<br></br>
+                <h:inputText id="skill2" style="width: 100%" title="Please enter your Skill" validatorMessage="The maximum length of your 
+                             Skill is 20." value="#{login.theProfile.skill2}"><f:validateLength maximum="20"/></h:inputText>
+                <h:message styleClass="errormessage" for="skill2" /><br></br><br></br>
+                Skill 3<br></br>
+                <h:inputText id="skill3" style="width: 100%" title="Please enter your Skill" validatorMessage="The maximum length of your 
+                             Skill is 20." value="#{login.theProfile.skill3}"><f:validateLength maximum="20"/></h:inputText>
+                <h:message styleClass="errormessage" for="skill3" /><br></br><br></br>
+
+            </p>
+            <p style="text-align:center; padding: 0em 2em 2em 2em; font-size: 0.8em">         
+                <h:commandButton id="save" value="Update profile" style="width: 100%; height: 40px; background-color: rgb(204,204,0); font-size: 1.7em" 
+                                 action="#{profile.edit(login.theLoginAccount.id, login.theLoginAccount.email,                                                   
+                                           login.theProfile.fname, login.theProfile.lname, login.theProfile.location,                                            
+                                           login.theProfile.company, login.theProfile.jobtitle, login.theProfile.school,                                         
+                                           login.theProfile.degree, login.theProfile.type, login.theProfile.gender,                                              
+                                           login.theProfile.skill1, login.theProfile.skill2, login.theProfile.skill3)}">
+                </h:commandButton><br></br> 
+            </p>
+
+        </h:form>
+    </h:body>
+</html>

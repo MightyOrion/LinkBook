@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Jobs | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+
+        <h:form styleClass="header">
+            <p style="text-align: right; padding-left: 1em; width: 95%"><h:link outcome="profile"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link>
+                <h:selectOneMenu id="searchs" value="#{login.searchCat}" >  
+                    <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                    <f:selectItem id="people" itemValue="People" itemLabel="People" />
+                    <f:selectItem id="companies" itemValue="Companies" itemLabel="Companies" />
+                    <f:selectItem id="universities" itemValue="Universities" itemLabel="Universities" />
+                </h:selectOneMenu>
+                <h:inputText id="searchword" title="Please enter your search keyword" styleClass="searchtextbox" value="#{login.searchWord}"></h:inputText>            
+                <h:commandButton styleClass="menubutton" id="search" value="Search" action="search.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="Name" value="#{login.theProfile.fname} #{login.theProfile.lname}" action="profile.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Connections" value="Connections" action="connections.xhtml" />&nbsp;  
+                <h:commandButton styleClass="menubutton" id="Jobs" value="Jobs" action="jobs.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Notification" value="Notifications" action="notification.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="SignOut" value="Sign Out" action="#{login.theLoginAccount.signOut()}" />&nbsp;&nbsp;                        
+            </p>
+        </h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 10em auto 0em" rendered="#{login.theProfile.type eq 'Regular' or login.theProfile.type eq 'Recruiter'}">
+
+            <h2 style="text-align: center; padding-top: 2em">Available jobs</h2>
+            <p style="text-align: center"><h:outputLabel rendered="#{empty job.getAvailableJobs(login.theLoginAccount.id)}">Sorry, your connections do not have any job available for you </h:outputLabel></p>
+            <h:dataTable style="margin: 1em" id="availList" styleClass="dataTable" rows ="#{job.getAvailableJobs(login.theLoginAccount.id).size()}" value="#{job.getAvailableJobs(login.theLoginAccount.id)}" var="Job" 
+                         rendered="#{not empty job.getAvailableJobs(login.theLoginAccount.id)}">  
+                <h:column>
+                    <h:graphicImage value="images/job.png" style="padding-right: 1.5em"/>                               
+                </h:column>
+                <h:column>
+                    <h:outputText styleClass="dataTableOutputText" id="strname2" value="#{Job.title}"/><br></br>
+                    <h:outputText styleClass="dataTableOutputTextSmall" id="strjobtitle2" value="#{Job.desc}"/><br></br><br></br>
+                </h:column>
+                <h:column>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em;" id="share" value="Share" action="confirmationjobshare" rendered="#{not job.isJobShared(Job.jobid,login.theLoginAccount.id)}">
+                        <f:setPropertyActionListener target="#{job.targetJobId}" value="#{Job.jobid}" />   
+                    </h:commandButton>
+                    <br></br>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; margin-top: 0.5em" id="save" value="Save" action="confirmationjobsave" rendered="#{not job.isJobSaved(Job.jobid,login.theLoginAccount.id)}">
+                        <f:setPropertyActionListener target="#{job.targetJobId}" value="#{Job.jobid}" />   
+                    </h:commandButton>
+                    <br></br>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; margin-top: 0.5em" id="apply" value="Apply" action="confirmationjobapply" rendered="#{not job.isJobApplied(Job.jobid,login.theLoginAccount.id)}">
+                        <f:setPropertyActionListener target="#{job.targetJobId}" value="#{Job.jobid}" />
+                    </h:commandButton>               
+                    <br></br>
+                    <h:commandButton styleClass="regularbutton" style="margin-left: 2em; margin-top: 0.5em" id="ignore" value="Ignore" action="confirmationjobignore">
+                        <f:setPropertyActionListener target="#{job.targetJobId}" value="#{Job.jobid}" />
+                    </h:commandButton><br></br><br></br>
+                </h:column>            
+            </h:dataTable>            
+
+            <p style="text-align:center; padding: 0em 2em 2em 2em; font-size: 0.8em">
+                <h:commandButton id="jobsave" value="Saved Jobs" action="jobsaved.xhtml" style="width: 40%; height: 30px"/>&nbsp;&nbsp;
+                <h:commandButton id="jobapply" value="Applied Jobs" action="jobapplied.xhtml" style="width: 40%; height: 30px"/>
+            </p>
+        </h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.5em auto" rendered="#{login.theProfile.type eq 'Recruiter'}">            
+            <h2 style="text-align: center; padding-left: 1.5em; padding-top: 2em">Post a job</h2>
+            <p style="text-align:left; padding: 2em 2em 0em 2em">
+                Job Title*<br></br>
+                <h:inputText id="title" style="width: 100%" required ="true" requiredMessage="The Job Title field cannot be empty" title="Please enter Job Title" validatorMessage="The length of Job Title must be between 3 and 50." 
+                             value="#{job.title}"><f:validateLength maximum="50" minimum="3" /></h:inputText>
+                <h:message styleClass="errormessage" for="title" /><br></br><br></br>
+
+                Job Description*<br></br>
+                <h:inputTextarea id="desc" style="width: 100%" rows="10" required ="true" requiredMessage="The Job Description field cannot be empty" title="Please enter your Job Description" validatorMessage="The length of your 
+                                 Job Description must be between 3 and 100." value="#{job.desc}"><f:validateLength maximum="100" minimum="3" /></h:inputTextarea>
+                <h:message styleClass="errormessage" for="desc" /><br></br><br></br>
+            </p>           
+            <p style="text-align:center; padding: 0em 2em 2em 2em; font-size: 0.8em">
+                <h:commandButton id="post" value="Post" action="confirmationjob.xhtml" style="width: 100%; height: 30px ">
+                    <f:setPropertyActionListener target="#{job.userid}" value="#{login.theLoginAccount.id}" />
+                </h:commandButton>
+            </p>
+        </h:form>
+        <h:form style="width: 600px; background-color: rgb(224,224,224); margin: 0.5em auto" rendered="#{login.theProfile.type eq 'Recruiter' and not empty job.getJobPosted(login.theLoginAccount.id)}">
+            <h2 style="text-align: center; padding-left: 1.5em; padding-top: 2em">Job posted</h2>
+            <h:dataTable style="margin: 1em" id="list" styleClass="dataTable" rows ="#{job.getJobPosted(login.theLoginAccount.id).size()}" value="#{job.getJobPosted(login.theLoginAccount.id)}" var="Job" >  
+                <h:column>
+                    <h:graphicImage value="images/job.png" style="padding-right: 1.5em"/>                               
+                </h:column>
+                <h:column>
+                    <h:outputText styleClass="dataTableOutputText" id="strname" value="#{Job.title}"/><br></br>
+                    <h:outputText styleClass="dataTableOutputTextSmall" id="strjobtitle" value="#{Job.desc}"/><br></br><br></br>
+                    <p style="font-size: 0.8em; margin:0">#{job.whoShared(Job.jobid)}</p><br></br>
+                    <p style="font-size: 0.8em; margin:0">#{job.whoApplied(Job.jobid)}</p><br></br>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>

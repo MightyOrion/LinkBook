@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>World’s Largest Professional Network | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+        <h:form styleClass="header">
+            <p style="text-align: right; padding-left: 1em; width: 95%"><h:link outcome="profile"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link>
+                <h:selectOneMenu id="searchs" value="#{login.searchCat}" >  
+                    <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                    <f:selectItem id="people" itemValue="People" itemLabel="People" />
+                    <f:selectItem id="companies" itemValue="Companies" itemLabel="Companies" />
+                    <f:selectItem id="universities" itemValue="Universities" itemLabel="Universities" />
+                </h:selectOneMenu>
+                <h:inputText id="searchword" title="Please enter your search keyword" styleClass="searchtextbox" value="#{login.searchWord}"></h:inputText>            
+                <h:commandButton styleClass="menubutton" id="search" value="Search" action="search.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="Name" value="#{login.theProfile.fname} #{login.theProfile.lname}" action="profile.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Connections" value="Connections" action="connections.xhtml" />&nbsp;  
+                <h:commandButton styleClass="menubutton" id="Jobs" value="Jobs" action="jobs.xhtml" />&nbsp;
+                <h:commandButton styleClass="menubutton" id="Notification" value="Notifications" action="notification.xhtml" />&nbsp;&nbsp;
+                <h:commandButton styleClass="menubutton" id="SignOut" value="Sign Out" action="#{login.theLoginAccount.signOut()}" />&nbsp;&nbsp;                        
+            </p>
+        </h:form>        
+        <h:form style="width: 400px; background-color: rgb(224,224,224); margin: 10em auto" >
+
+            <p style="text-align:center; padding: 2em">                
+                #{job.ignoreJob(login.theLoginAccount.id)}    
+            </p>
+            <p style="text-align:center; padding: 0em 2em 2em 2em; font-size: 0.8em"> 
+                <h:commandButton id="return" value="Return" action="jobs.xhtml" style="width: 100%; height: 30px "/>
+            </p>
+        </h:form>
+    </h:body>
+</html>
+

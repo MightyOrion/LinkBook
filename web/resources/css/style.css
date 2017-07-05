@@ -1,0 +1,114 @@
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #141313;
+  text-align: center;
+}
+
+.header {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  background-color: #383737;
+  text-align: center;
+}
+p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.background{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/faces.jpg); 
+    background-attachment: fixed
+}
+
+.errormessage {
+    color:red; 
+    display:block; 
+    font-size: 10pt
+}
+
+.dataTableOutputText{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #262d30;  
+}
+
+.dataTableOutputTextSmall
+{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1em;
+    color: #3F4B50;  
+}
+.dataTable{
+    padding: 2em;
+}
+
+h2{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #262d30;
+}
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 2em;
+    color: #262d30;
+}
+
+.searchtextbox { 
+    background: #FFF url(../../images/searchicon.png) no-repeat 1px 1px; 
+    border: 0px; 
+    outline:0; 
+    padding-left: 25px;
+    height: 17px;
+  } 
+
+
+.menubutton {
+    padding: 2px 12px;
+    display: inline;
+    background: #777;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    }
+.menubutton:hover {
+    background-position: 0 -48px;
+    background-color: #333;
+    }
+.menubutton:active {
+    background-position: 0 top;
+    position: relative;
+    top: 1px;
+    padding: 6px 12px 4px;
+    }
+
+.regularbutton {
+    padding: 5px 10px;    
+    display: inline;
+    background: #777;
+    border: none;
+    color: #DAE6FC;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    }
+.regularbutton:hover {
+    background-position: 0 -48px;
+    background-color: #0D3482;
+    }
+.regularbutton:active {
+    background-position: 0 top;
+    position: relative;
+    top: 1px;
+    padding: 6px 10px 4px;
+    }

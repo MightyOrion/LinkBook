@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>World’s Largest Professional Network | Linkedbook</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+
+    <h:body styleClass="background">
+        <h:form styleClass="header">
+
+            <p style="text-align: right; color: grey; padding-left: 1em; width: 95%"><h:link outcome="index"><h:graphicImage style="float: left;" value="images/linkedbook_logo.png"/></h:link>
+                Email&ensp;
+                <h:inputText id="eml" required ="true" requiredMessage="The Email field cannot be empty!" title="Please enter your Email" value="#{login.email}">
+                </h:inputText>           
+
+                &ensp;&ensp;Password&ensp;
+                <h:inputSecret id="psw" required ="true" requiredMessage="The Password field cannot be empty!" title="Please enter your Password"  value="#{login.password}"/> &nbsp;&nbsp;&nbsp;
+                <h:commandButton id="signin" value="Sign in" styleClass="menubutton" action="#{login.login()}">
+                </h:commandButton>
+                <h:message styleClass="errormessage" for="eml" />
+                <h:message styleClass="errormessage" for="psw" />
+            </p>
+        </h:form>
+
+        <h:form style="width: 400px; background-color: rgb(224,224,224); margin: 10em auto" >            
+            <h2 style="text-align: center; padding-top: 2em">Be great at what you do</h2>
+            <p style="text-align:center">Get started - it's free.</p>            
+            <p style="text-align:left; padding: 0em 2em 0em 2em">                
+                First name<br></br>
+                <h:inputText id="firstname" style="width: 100%" required ="true" requiredMessage="The First Name field cannot be empty" title="Please enter your First Name" validatorMessage="The length of your 
+                             first name must be between 3 and 20" value="#{registration.fname}"><f:validateLength maximum="20" minimum="3" /></h:inputText>
+                <h:message styleClass="errormessage" for="firstname" /><br></br><br></br>
+                Last name<br></br>
+                <h:inputText id="lastname" style="width: 100%" required ="true" requiredMessage="The Last Name field cannot be empty" title="Please enter your Last Name" validatorMessage="The length of your 
+                             last name must be between 3 and 20" value="#{registration.lname}"><f:validateLength maximum="20" minimum="3" /></h:inputText>
+                <h:message styleClass="errormessage" for="lastname" /><br></br><br></br>
+                Email<br></br>
+                <h:inputText id="email" style="width: 100%" required ="true" requiredMessage="The Email field cannot be empty" title="Please enter your Email" validatorMessage="Must be a valid email" value="#{registration.email}">
+                    <f:validateRegex
+                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText>
+                <h:message styleClass="errormessage" for="email" /><br></br><br></br>           
+                Password (6 or more characters)<br></br>
+                <h:inputText id="password" style="width: 100%" required ="true" requiredMessage="The Password field cannot be empty"  validatorMessage="The length of your 
+                             first name must be between 6 and 20" title="Please enter your Password" value="#{registration.password}"><f:validateLength maximum="20" minimum="6" /></h:inputText>
+                <h:message styleClass="errormessage" for="password" /><br></br><br></br>                
+            </p>
+            <p style="text-align:center; padding: 0em 2em 2em 2em; font-size: 0.8em"> 
+                By clicking Join now, you agree to Linkedbook's User Agreement, Privacy Policy, and Cookie Policy.           
+                <h:commandButton id="register" value="Join now" style="width: 100%; height: 40px; background-color: rgb(204,204,0); font-size: 1.7em" action="confirmation.xhtml" /><br></br> 
+            </p>
+        </h:form>
+        <h:form styleClass="footer"><p style="color: grey">            
+                UHCL - ISAM5638 - Spring 2016 - Group 5                
+            </p>
+        </h:form>
+    </h:body>
+</html>
+
